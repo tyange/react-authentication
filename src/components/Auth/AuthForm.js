@@ -1,9 +1,11 @@
 import {useState, useRef, useContext} from 'react';
+import {useHistory} from "react-router-dom";
 
 import AuthContext from "../../store/auth-context";
 import classes from './AuthForm.module.css';
 
 const AuthForm = () => {
+    const history = useHistory();
     const emailInputRef = useRef();
     const passwordInputRef = useRef();
 
@@ -57,6 +59,8 @@ const AuthForm = () => {
             }
         }).then(data => {
             authCtx.login(data.idToken);
+            // replace: 유저가 이전 페이지로 돌아갈 수 없음
+            history.replace('/');
         }).catch(err => {
             alert(err.message);
         });
